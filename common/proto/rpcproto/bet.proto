@@ -1,0 +1,39 @@
+
+syntax = "proto3";
+package rpc;
+option go_package = ".;rpc";
+
+
+// 用于在投注服和游戏之间传递的投信息结构体
+ message    BetToGameRPC   {
+
+    string   UserId     =1;   //帐号userId
+    string   ClientId    =2;   //clientId
+    string   GateNodeId  =3;   //来源的gate
+    string   GameId      =4;  //游戏ID
+    int32    DeskNo      =5;  //桌号
+    int32    BetMode    =6;     //从哪个地方投注的0 游戏， 1 多台投注
+    int64    OrderKey   =7;    //定单ID，客户端自已生成，当前局每注都要不一样
+    int32    BetAreadId =8;    //投注区的ID
+    uint32   BetPoint   =9;     //投注金额，实际=BetPoint/Digits
+    int32    Digits     =10;    //小数位数
+  }
+
+
+//打赏，用于投注服和游戏服之间传递的信息结构体
+message TipToGameRPC {
+
+   string   UserId     =1;   //帐号userId
+   string   ClientId    =2;   //clientId
+   string   GateNodeId  =3;   //来源的gate
+   string   GameId      =4;  //游戏ID
+   int32    DeskNo      =5;  //桌号
+
+   int64    OrderKey   =7;    //定单ID，客户端自已生成，当前局每注都要不一样
+
+   uint32   TipPoint   =8;     //投注金额，实际=BetPoint/Digits
+   int32    Digits     =9;    //小数位数
+
+   string   DealerId   = 10 ; //打赏给哪个荷官
+
+}

@@ -1,0 +1,96 @@
+syntax = "proto3";
+package msg;
+option go_package = ".;msg";
+
+
+message Card {
+  uint32 Number = 1; // 1-13 A,KING
+  uint32 Color = 2; // 1:黑桃，2：红心 3:梅花 4:方块
+}
+
+//龙虎的牌类型
+message CardDTX {
+  Card  DragonCard  = 1 ;  //龙的牌
+  Card  TigerCard   = 2 ;  //虎的牌
+}
+
+//百家乐的牌类型
+message CardBACX {
+  int32   PCardNum = 1;   //闲家牌数
+  int32   BCardNum = 2;   //庄家牌数
+  repeated Card  PlayerCards = 3 ;  //闲家牌
+  repeated Card  BankerCards = 4 ;  //庄家牌
+}
+
+//=================================================================================================================
+message AnswerBACX {
+
+  uint32   Winner         = 1 ;  //胜者( 0 闲家胜，1 庄家胜 2 和局 )
+
+  uint32   IsPPair        = 2 ;  //是否闲对子
+  uint32   IsBPair        = 3 ;  //是否庄对子
+
+  uint32   IsSuperSix     = 4 ;  //是否SuperSix
+  uint32   IsPerfectPair  = 5 ;  //是否完美对子
+  uint32   IsAnyPair      = 6;  //是否任意对子
+  uint32   IsBig          = 7;  //是否大
+  uint32   IsPlayerBonus  = 8 ; //是否闲龙宝
+  uint32   IsBankerVBonus = 9;  //是否庄龙宝
+
+  CardBACX  cards     = 10;
+}
+
+//百家历史开答内容
+message WinnerBACX {
+
+  uint32  Winner = 1;
+  uint32  PPair   = 2;
+  uint32  BPair  = 3;
+
+}
+
+//百家乐的历史开答列表,注意和上面的区别一个字s
+message  WinnersBACX {
+  repeated  WinnerBACX  WinnerItems = 1;
+}
+
+
+//===================================================================================================
+message AnswerDTX {
+
+    uint32   winner     = 1 ;  //胜者( 0 龙胜，1 虎胜 2 平局 )
+    CardDTX  cards      = 2;
+}
+
+//龙虎的历史开答结果
+message  WinnersDTX {
+  repeated  int32  WinnerItems = 1;
+}
+
+//=================================================================================================
+//筛保的开答结果
+message AnswerSicbo {
+
+  uint32   winner  = 1 ;  //开答的索引
+
+  uint32   sicboA   = 2;  //第一个球的内容
+  uint32   sicboB   = 3;  //第二个球的内容
+  uint32   sicboC   = 4;  //第三个球的内容
+
+  repeated  uint32   WinnerIds  =  5; //需要高亮显示的区域id
+
+}
+
+//筛保的历史开奖结果
+message  WinnersSicbo {
+
+  int32   totalnum  = 1;  //总的开奖列表数
+  int32   lastnum   = 2;  //传输给你的最后多少局的列表
+
+  repeated  uint32  WinnerItems = 3; //开奖索引号
+}
+
+
+
+
+

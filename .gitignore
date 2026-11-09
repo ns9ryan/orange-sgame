@@ -1,0 +1,15 @@
+/log/
+/go_build_videogame.exe
+/go_build_videogame.exe_videogame.pid
+/pkg/
+.DS_Store
+.idea
+orange-vgame_bot.pid
+orange-vgame_botCtrl.pid
+orange-vgame
+orange-vgame.exe
+orange-vgame.pid
+orange-sgame
+orange-sgame.exe
+orange-sgame.pid
+/runtime/

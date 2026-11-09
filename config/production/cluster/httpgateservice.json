@@ -1,0 +1,27 @@
+{
+  "Service": {
+    "HttpGateService": {
+      "HttpListen":":9000",
+      "ForbidGustLogin":false,
+      "MinGoroutineNum": 10,
+      "MaxGoroutineNum": 100,
+      "MaxTaskChannelNum": 100,
+      "KeyFile":"",
+      "CertFile":""
+    }
+  },
+  "NodeService": [
+    {
+      "NodeId": "game",
+      "HttpGateService": {
+        "HttpListen":":9000",
+        "ForbidGustLogin":false,
+        "MinGoroutineNum": 10,
+        "MaxGoroutineNum": 100,
+        "MaxTaskChannelNum": 100,
+        "KeyFile":"",
+        "CertFile":""
+      }
+    }
+  ]
+}

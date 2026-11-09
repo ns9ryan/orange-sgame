@@ -1,0 +1,9 @@
+syntax = "proto3";
+package rpc;
+option go_package = ".;rpc";
+
+// gate->HttpGateService同步负载情况
+message GateServiceBalance {
+  string NodeId     = 1; //gate 节点ID
+  int64  IncreaseNum = 2;// 可正可负
+}

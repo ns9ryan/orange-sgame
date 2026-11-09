@@ -1,0 +1,38 @@
+syntax = "proto3";
+package msg;
+option go_package    = ".;msg";
+
+enum DataType {
+
+    Lobby = 0;      //大厅
+    BACX = 1 ;       //百家乐
+    DTX = 2;        //龙虎
+    ROT = 3;        //轮盘
+    SICBO = 4 ;     //大小
+    FTAN  = 5;      //番滩
+    SDIE  = 6;      //色蝶
+    FSC  = 7;      //鱼虾蟹
+}
+
+
+message Bytes {
+    bytes value = 1;
+}
+
+message BytesList {
+    repeated Bytes valueList = 1;
+}
+
+message MsgPing {
+}
+
+message MsgPong {
+    //int64 nowTime = 1;
+
+    uint32 nowTime = 1;
+}
+
+message MsgNil {
+}
+
+

@@ -1,0 +1,65 @@
+syntax = "proto3";
+package msg;
+option go_package                           = ".;msg";
+
+
+//帐号的相关信息
+message STOC_PlayerInfo {
+
+  string  UserId    = 1;  //用户ID
+  string  UserName  = 2;  //名称
+  string  Currency  = 3;   //货币
+ // int64   Credit    = 4;   //余额 真实= Credit /(10*Digits )
+
+  uint32  Credit    = 4;   //余额 真实= Credit /(10*Digits ),2025.4.28
+
+  int32   Digits    = 5;   //小数点位数
+
+}
+
+//在线人数信息
+message  STOC_PlayerNum {
+
+  string GameId     = 1 ;    //游戏Id
+  int32  DeskNo     = 2;     //桌号
+  int32  OnlineNum  = 3;  //在线人数
+
+}
+
+//大厅的游戏分组信息
+message  STOC_LobbyGameGroups {
+
+  int32  GroupNum           = 1 ;  //总的分组个数
+  int32  GameNum            = 2;   //总的游戏数量
+
+  repeated  string GroupId  = 3 ;  //游戏分组Id "BAC", "DTX", "ROT", "SICBO","FTAN","OTHER"
+}
+
+//游戏房间
+message  GameRoom {
+
+  int32    RoomNo   = 1;  //房间列表索引号,从0开始，用于标记第几组信息用
+  string   GameId   = 2;  //游戏房间ID，每个游戏唯一的ID,与游戏服务器交互需要用
+  int32    DeskNo   = 3;  //游戏桌号
+  string   Title    = 5;  //游戏标题，暂时不需要处理
+
+  string   DealerName = 6; //荷管的名称
+  string   DealerUrl  = 7; //荷管的头像图像的地址链接(需要用http去读取)
+  string   VideoURL = 8;  //视频源地址,进游戏房间也会收到，这边不需要处理
+
+  uint32   IsDisable  = 9;  //游戏是否停用 0:启用，1:表示停用
+
+  uint32   MinBet =10 ;  //最小投注额度,2025.4.24 add
+  uint32   MaxBet =11 ;  //最大投注额度2025.4.24 add
+  uint32   Digits =12;   //小数位2025.4.24 add
+
+}
+
+
+//大厅的游戏房间信息
+message STOC_LobbyGameRooms {
+      string      GroupId  = 1;             //游戏分组的ID
+      int32       isLast   = 2;             //是否最后一组房间( 0,表示后面还有分组数据消息了，1 表示 这是最后一组)
+      repeated    GameRoom   GameRooms = 3; //游戏房间信息
+
+}

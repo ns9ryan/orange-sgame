@@ -1,0 +1,14 @@
+services:
+  game:
+    image: orange-sgame
+    container_name: game
+    command: ["./orange-sgame", "-start", "nodeid=game", "-config", "./config/production"]
+    network_mode: host  # 使用 host 网络模式
+    environment:
+      - TZ=Asia/Shanghai  # 设置时区为上海时间
+    volumes:
+      - ./orange-sgame:/app/orange-sgame  # 映射编译好的二进制文件
+      - ./config:/app/config  # 映射配置目录
+      - /etc/timezone:/etc/timezone  # 映射主机的时区配置
+      - /etc/localtime:/etc/localtime  # 映射主机的时区文件
+      - /home/coolz/go/workspace/orange-sgame/log:/app/log  # 映射日志目录

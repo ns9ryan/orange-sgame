@@ -1,0 +1,84 @@
+syntax = "proto3";
+package rpc;
+option go_package = ".;rpc";
+
+message CreatePlayerApiReq {
+
+    string MerchantCode = 1; //8位大写商户编码2YNE87WT
+    string Username = 2;     //ZhangSan01，最终player表username为2yne87wt_zhangsan01
+    string Code = 3;         //USD
+    string Nickname = 4;
+    string Email = 5;
+    string Phone = 6;
+    string Password = 7;
+    int32  DeviceType = 8;   //0桌面H5横屏，1手机H5竖屏
+
+}
+
+message CreatePlayerApiRet {
+
+    int32  Code = 1;
+    string Msg = 2;
+
+}
+
+message UpdatePlayerApiReq {
+
+    string MerchantCode = 1;
+    string Username = 2;
+    repeated string UpdateKeys = 3; //例如["nickname", "email", "bet_paused"]
+
+    string Nickname = 4;
+    string Email = 5;
+    string Phone = 6;
+    string Password = 7;
+    int32  BetPaused = 8;
+
+}
+
+message UpdatePlayerApiRet {
+
+    int32  Code = 1;
+    string Msg = 2;
+
+}
+
+message DepositApiReq {
+
+    string MerchantCode = 1;
+    string Username = 2;
+    float  Amount = 3;
+    string MerchantTransId = 4;
+
+}
+
+message DepositApiRet {
+
+    int32  Code = 1;
+    string Msg = 2;
+    string OrangeTransId = 3;
+    string OrangeTransTime = 4;
+    float  Balance = 5;
+    string CurrencyCode = 6;
+
+}
+
+message WithdrawApiReq {
+
+    string MerchantCode = 1;
+    string Username = 2;
+    float  Amount = 3;
+    string MerchantTransId = 4;
+
+}
+
+message WithdrawApiRet {
+
+    int32  Code = 1;
+    string Msg = 2;
+    string OrangeTransId = 3;
+    string OrangeTransTime = 4;
+    float  Balance = 5;
+    string CurrencyCode = 6;
+
+}

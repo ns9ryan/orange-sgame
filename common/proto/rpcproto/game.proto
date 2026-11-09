@@ -1,0 +1,41 @@
+
+syntax = "proto3";
+package rpc;
+option go_package = ".;rpc";
+
+
+   // 游戏状态情况
+   message  GameStatusMsg{
+
+    string GameId      =1;     //游戏ID
+    int32  DeskNo      =2;     //桌号
+    int32  Set         =3;     //场次
+    int32  Round       =4;     //局号
+    int32  GameStatus  =5;     //游戏状态
+    int32  CurrentTime =6;     //当前时间，表示游戏开始下注已经过的时间，秒数
+    int32  IsAnswered  =7;    //是否已开答
+   }
+
+   //设置supsersix状态
+   message GameSuperSixSet {
+
+       string  UserId      =1 ; //帐号userId
+       string  ClientId    =2; //clientId
+       string  GateNodeId  =3; //来源的gate
+
+       string  GameId      =4;     //游戏ID
+       int32   DeskNo      =5;     //桌号
+
+       int32   SuperSixStatus  = 6; //设置SuperSix开关状态 1:打开supersix 0:关闭supersix
+   }
+
+   //聊天信息
+  message  GameTalkChat {
+
+    string   GameId   = 1 ;   //游戏ID
+    int32    Deskno   = 2 ;   //桌号
+    string   UserId   = 3;   //填入帐号id
+    string   Message  = 4 ;  //聊天的内容
+
+  }
+

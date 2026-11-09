@@ -1,0 +1,83 @@
+syntax = "proto3";
+package msg;
+option go_package = ".;msg";
+enum MsgType //枚举消息类型
+{
+  //客户端请求响应消息
+  Null = 0;
+  Ping = 10;
+  Pong = 11;
+  GM = 12;
+
+  /*****************************************
+   ID: 10000-20000 由玩家端-->服务器
+       30000-40000 服务器-->玩家端
+  ******************************************/
+
+   ServerTime          = 100 ;   //服务器时间
+
+   LoginRequest        =  10000;    //登陆游戏大厅请求
+  
+   JoinGame            =  10001 ;   //进入游戏房间请求，只是请求
+   ExitGame            =  10002 ;   //离开游戏房间请求
+   EditNameRequest     =  10003 ;   //修改名字请求
+
+   EnterGame           =  10004 ;   //通知已进入房间,若成功，则收到很多游戏配置消息
+   EnterLobby          =  10005 ;   //通知已进入大厅，若成功，则收到帐号相关信息,若不成功，服务器直掉断开
+
+
+   GameTable_Bet       =  10201 ;   //玩家下注请求
+   GameTable_CancelBet =  10202 ;   //玩家撤消下注请求
+   GameTable_SuperSixSet = 10203 ;  // SuperSix开关操作
+   GameTable_TipMoney    = 10204 ;  //玩家小费打赏
+   GameTable_TalkChat    = 10205 ;  //玩家聊天内容
+
+
+   LoginResult         =  30000;     //登陆游戏大厅的回复
+   JoinGameResult      =  30001 ;   //进入房间的结果回复
+   ExitGameResult      =  30002 ;   //退出房间的结果回复
+   EditNameResult      =  30003 ;   //修改名字的回复
+   EnterGameFailed     =  30004;    //进入游戏不成功
+
+   PlayerInfo_Card          =  30005 ;   //玩家的基本信息
+   GameInfo_PlayNum         =  30006 ;   //玩家在线人数信息
+
+   Lobby_NoticeMessage      =  30007 ;   //服务器的公告通知消息
+
+   Lobby_GameGroup          =  30010 ;   //大厅的游戏分组
+   Lobby_GameRoom           =  30011 ;   //大厅的游戏房间内容(每个游戏的相关属性)
+
+   Lobby_GameStatus         =  30012;    //大厅的游戏状态消息更新
+   Lobby_GameAnswer         =  30013;    //大厅的游戏开答更新
+   Lobby_GameHistoryAnswers =  30014;    //大厅的游戏历史开答表
+
+
+   GameTable_Setting        =  30101 ;   //游戏桌配置信息
+   GameTable_Status         =  30102 ;   //游戏状态
+   GameTable_Answer         =  30103 ;   //游戏开答
+   GameTable_HistoryAnswers =  30104 ;   //游戏历史开答表
+   GameTable_PlayerWin      =  30105 ;   //玩家的胜额
+   GameTable_BetLimit       =  30106 ;   //高低注的限制
+   GameTable_PlayerBetted   =  30107 ;   //玩家最后的投注(未开奖时,用于下线再上线时，之前有投注)
+
+   GameTable_NoBetRound     =  30108 ;   //未下注局数提醒
+
+   GameTable_BetResult       =  30201 ;   //玩家投注结果
+   GameTable_CancelBetResult =  30202 ;   //玩家撤消投注结果
+   GameTable_SuperSixStatus  =  30203 ;   //SuperSix开关状态
+   GameTable_TipMoneyResult  =  30204 ;   //打赏小费的回复
+   GameTable_TalkChatShow    =  30205 ;   //服务器下发聊天内容
+
+   MultiBet_GameTable_Setting_List        =  30301 ;   //多投服的各个游戏桌配置信息（多投页面）
+   MultiBet_GameTable_BetLimit_List       =  30302 ;   //多投服的各个游戏高低注的限制（多投页面）
+   MultiBet_GameTable_Status_List         =  30303 ;   //多投服的各个游戏状态（多投页面）
+   MultiBet_GameTable_HistoryAnswers_List =  30304 ;   //多投服的各个游戏历史开答表（多投页面）
+   MultiBet_GameSettingOpt                =  30305;    //多投服的获取游戏配置协议
+
+   MultiBet_GameStatus         =  30306;    //多投服的游戏状态消息更新
+   MultiBet_GameAnswer         =  30307;    //多投服的游戏开答更新
+   MultiBet_GameAnswersHistory =  30308;    //多投服的游戏历史开答表
+
+}
+
+

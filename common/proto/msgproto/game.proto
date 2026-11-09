@@ -1,0 +1,278 @@
+syntax = "proto3";
+package msg;
+option go_package = ".;msg";
+import "google/protobuf/any.proto";
+
+
+//游戏的配置信息,全部游戏用这个结构体
+message STOC_GameSetting {
+
+  string           GameId     = 1 ;   //游戏ID
+  int32            DeskNo     = 2;    //桌号
+  string           VideoUrl   = 3;    //视频流地址
+
+  int32            TotalBetTime = 4 ; //总的下注时间
+  string           Currency     = 5 ; //使用的货币
+
+  string           DealerName  =6 ;   //荷官的名称
+
+  int32            BetNum     = 7;    //投注区域的个数
+  int32            ChipNum    = 8;    //筹码的个数
+
+  int32            ChipDigits = 9 ;   //筹码实际值需要除这个Digits
+  repeated int32   ChipPoints = 10;   //筹码列表，玩家可以从这些筹码选
+
+  int32            dataType = 11;     //后面数据的结构类型( 1:百家乐  2:龙虎， 2:轮盘 3 筛宝 4. 番滩 5.色碟 6. 鱼虾蟹 )
+
+  google.protobuf.Any TableSetting = 12; // 适用于通用数据类型, 对应结构在setting.proto
+
+  int32            TipMin = 13;   //最小打赏金额=实际金额/Digits, 2025.5.30 add
+  int32            TipMax = 14;   //最大打赏金额=实际金额/Digits
+  int32            Digits = 15;   //小数位
+
+  int32            TipUseNum = 16 ; //打赏金额的使用个数(下面列表的可使用数)
+  repeated  int32  TipItems = 17  ; //可打赏金额的列表数(真实值,需要除Digits )
+
+
+};
+
+//最低，最高注的设置
+message STOC_GameBetLimit {
+
+  string       GameId     = 1 ;   //游戏ID
+  int32        DeskNo     = 2;    //桌号
+
+  int32        LowBet     = 3;    //最低注
+  int32        HighBet    = 4;    //最高注
+
+  int32        Digits     = 5;    //小数位数,2025.2.23 新增加的
+}
+
+
+//服务器发客户端的游戏状态消息
+message  STOC_GameStatus {
+   string  GameId      = 1;   //每个游戏游戏唯一的ID,以此区分游戏
+   int32   DeskNo      = 2;   //桌号
+   int32   Set         = 3;   //场次
+   int32   Round       = 4;   //局数
+   int32   GameSatus   = 5;   //游戏状态 0 休场 1 洗牌  2 下注中， 3 停止下注
+   int32   BetTime     = 6;   //还有多少下注时间
+   int32   IsAnswered  = 7;   //是否已开奖，当处在停止下注时
+}
+
+//服务器发送客户端的开答消息
+message STOC_GameAnswer {
+
+    string  GameId  = 1;      //每个游戏游戏唯一的ID
+    int32   DeskNo  = 2;       //桌号
+    int32   Set     = 3;       //场次
+    int32   Round   = 4;       //局数
+    string  GlobalId = 5;     //全局ID，将来需要用
+
+    int32   DataType = 6;     //后面数据的结构类型( 0:龙虎的， 1:百家的牌  2:轮盘 3 大小 )
+
+    google.protobuf.Any Answer = 7; //适用于通用数据类型( 0:龙虎的， 1:百家的牌  2:轮盘 3 大小  )
+
+    int32  FlashSecond = 8 ; //开答后，中奖区域高亮闪的秒值（ 0,表示一直闪，直到下局开始，一般用于开发测，
+
+}
+
+//服务器发送客户端的历史开答消息
+message STOC_GameHistoryAnswers {
+
+   string  GameId  = 1;       //每个游戏游戏唯一的ID
+   int32   DeskNo  = 2;       //桌号
+   int32   Set     = 3;       //场次
+   int32   Round   = 4;       //局数
+
+   int32   GameStatus = 5;    //游戏状态 0 休场 1 洗牌  2 下注中， 3 停止下注
+   int32   BetTime    = 6;    //若游戏在下注状态时，此值表示还有多少投注秒数
+   int32   IsGameUse   = 7 ;  //是否游戏中使用 1 表示在游戏使用 0表在大厅使用
+   int32   DataType    = 8;   //后面数据的结构类型( 0:龙虎的， 1:百家的牌  2:轮盘 3 大小 )
+
+   google.protobuf.Any Answers = 9; //适用于通用数据类型( 0:龙虎的 WinnersDTX ， 1:百家的牌  2:轮盘 3 大小 )
+}
+
+//下注游戏消息
+message CTOS_BetGame {
+
+  //int64   OrderKey  = 1;   //定单ID，客户端自已生成，当前局每注都要不一样
+  uint32    OrderKey  = 1;   //定单ID，客户端自已生成，当前局每注都要不一样, 2025.4.28 add
+
+  string  GameId   = 2;    //游戏名称ID
+  int32   DeskNo   = 3;    //桌号
+
+  int32    BetMode  = 4;     //=0 ,singlebet =1, mutlibet
+  int32    BetAreadId = 5; //投注区的ID(暂定 龙:1006,虎：1007 ，和:1008 )
+  uint32   BetPoint   = 6 ;  //投注金额= 实际下注金额*Digits, 保证一直是整数
+  int32    Digits = 7;  //精确度，
+
+}
+
+//下注信息返回
+message STOC_BetGame_Result {
+
+  int32   Success   = 1;  //下注是否成功 0：成功  1：失败
+  int32   ErrCode   = 2;  //错误码
+
+  string  GameId    = 3;    //游戏名称ID
+  int32   DeskNo    = 4;    //桌号
+
+  int32   BetMode   = 5;     //=0 ,singlebet =1, mutlibet
+  //int64   OrderKey  = 6;   //定单ID，客户端自已生成，当前局每注都要不一样
+
+  uint32   OrderKey  = 6;   //定单ID，客户端自已生成，当前局每注都要不一样
+
+  int32   BetAreadId = 7;   //投注区的ID
+  uint32  BetPoint   = 8 ;  //投注金额实际要除以BetPoint/Digits
+
+  int32   Balance    =9 ;   //玩家余额
+  int32   TotalBet   =10;   //总投注额
+  int32   Digits     =11 ;  //小数位
+}
+
+
+//撤消最后游戏下注消息
+message CTOS_CancelBetGame {
+
+  string  GameId = 1;    //游戏名称ID
+  int32   DeskNo = 2;    //桌号
+
+  int32   BetMode = 3;   //=0 ,singlebet =1, mutlibet
+
+  //int64   OrderKey = 4; //之前的投注单号，上传时可为0
+  uint32   OrderKey = 4; //之前的投注单号，上传时可为0, 2025.4.28 add
+}
+
+
+//撤消最后游戏下注消息结果返回
+message STOC_CancelBetGame_Result {
+
+  int32   Success   = 1;  //下注是否成功 0：成功  1：失败
+  int32   ErrCode   = 2;  //错误码
+
+  string  GameId    = 3;   //游戏名称ID
+  int32   DeskNo    = 4;   //桌号
+
+  int32   BetMode   = 5;    //=0 ,singlebet =1, mutlibet
+
+  //int64   OrderKey  =  6;   //定单ID，客户端自已生成，当前局每注都要不一样
+  uint32  OrderKey  =  6;   //定单ID，客户端自已生成，当前局每注都要不一样, 2025.4.28 add
+  int32   BetAreadId = 7;   //投注区的ID
+  uint32  BetPoint   = 8 ;  //投注金额
+
+  int32   Balance    =9 ;   //玩家余额
+  int32   TotalBet   =10;   //总投注额
+  int32   Digits     =11 ;  //小数位
+
+}
+
+//打赏小费消息
+message  CTOS_TipMoney {
+
+  string  GameId = 1;    //游戏名称ID
+  int32   DeskNo = 2;    //桌号
+
+  uint32  TipMoney =   3;   //打赏的小费
+  int32   Digits   =   4 ;    //小数点位数值实际打赏额:TipMoney/Digits
+  uint32  OrderKey  =  5;   //定单ID，客户端自已生成，用于打赏多笔时用，
+  string  DealerId  =  6;   //打赏给哪个荷官(现阶不起作用)
+}
+
+//打赏小费消息的回复
+message STOC_TipMoneyResult {
+
+  int32   Success   = 1;    //下注是否成功 0：成功  1：失败
+  int32   ErrCode   = 2;    //错误码,
+  string  GameId    = 3;    //游戏名称ID
+  int32   DeskNo    = 4;    //桌号
+  uint32  TipMoney  = 5;    //打赏的小费
+  int32   Digits    = 6 ;   //小数点位数值实际打赏额:TipMoney/Digits
+  uint32  OrderKey  = 7;    //定单ID，客户端自已生成，用于打赏多笔时用，
+}
+
+//开奖后，玩家嬴额
+message STOC_GamePlayerWin {
+
+  string GameId = 1 ; //游戏ID
+  int32  Deskno = 2 ; //桌号
+
+  string UserId = 3;  //帐号id
+
+  int32  WinPoint = 4;   //玩家的胜额，包含本金
+  int32  Digits   = 5;  //显示时需要胜额/Digits
+
+}
+
+
+//投注的区域，用于下面的
+message BetAmout {
+
+  int32   BetAreaId = 1 ; //投注区域
+  int32   BetPoint  = 2 ; //投注额度
+
+  //int64   OrderKey  = 3;  //投注定单的Key
+  uint32   OrderKey  = 3;  //投注定单的Key
+}
+
+//玩家的投注情况
+message STOC_GamePlayerBetted {
+
+  string   GameId = 1 ; //游戏ID
+  int32    Deskno = 2 ; //桌号
+
+  int32    Digits = 3;     //实际/Digits
+  //int64    TotalBet = 4;   //总投注额度，需要除Digits
+  uint32    TotalBet = 4;   //总投注额度，需要除Digits
+
+  repeated  BetAmout  BetItems = 5; //投注区域的列表
+}
+
+
+//玩家聊天
+message CTOS_TalkChat {
+
+  string   GameId   = 1 ;    //游戏ID
+  int32    Deskno   = 2 ;    //桌号
+  string   PlayerId = 3;   //填入帐号id
+  string   Message  = 4 ;  //聊天的内容
+}
+
+//服务器下发玩家聊天
+message STOC_TalkChat {
+
+  string   GameId    = 1 ;    //游戏ID
+  int32    Deskno    = 2 ;    //桌号
+
+  int32    MsgType   = 3 ;   //消息类型 0：聊天内容 1：服务器公告  2：派彩公告
+  string   Message   = 4 ;   //聊天的内容
+
+  string   PlayerId  = 5;    //发布聊的人
+  int32    unused1   = 6;    //=0 接收的人， 1：自已
+  int32    unused2   = 7 ;   //暂时无用
+}
+
+//超出未下注局数上限
+message  STOC_NoBetRoundOver {
+
+  string   GameId      = 1 ;         //游戏ID
+  int32    Deskno      = 2 ;         //桌号
+  int32    NoBetRound  = 3;          //未下注的局数
+  int32    unused1     = 4;          //保留暂时没用
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

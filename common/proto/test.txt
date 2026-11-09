@@ -1,0 +1,5 @@
+protoc --proto_path=d:/gowork/orange-sgame/common/proto --go_out=d:/gowork/orange-sgame/common/proto/msg  d:/gowork/orange-sgame/common/proto/msgproto/*.proto
+
+
+
+protoc --proto_path=d:/gowork/orange-sgame/common/proto --go_out=d:/gowork/orange-sgame/common/proto/rpc  d:/gowork/orange-sgame/common/proto/rpcproto/*.proto

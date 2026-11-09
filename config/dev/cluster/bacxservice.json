@@ -1,0 +1,18 @@
+{
+  "Service": {
+    "BacxService": {
+	 "WSCfg": {
+        "ListenAddr": "0.0.0.0:9556",
+        "MaxConnNum": 10000,
+        "PendingWriteNum": 10000,
+        "LittleEndian": false,
+        "MaxMsgLen": 1024000,
+        "MinGoroutineNum": 10,
+        "MaxGoroutineNum": 100,
+        "MaxTaskChannelNum": 100
+      }
+    }
+  },
+  "NodeService": [
+  ]
+}

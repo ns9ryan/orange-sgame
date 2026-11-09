@@ -1,0 +1,85 @@
+syntax = "proto3";
+package msg;
+option go_package = ".;msg";
+
+message BetRecord {
+  int32 Id = 1;
+  string Set = 2;//场次号
+  string Round = 3;//局号
+  string BetTime = 4;//投注时间
+  string BetAreaName = 5;//区域名称
+  string BetAmount = 6;//投注本金
+  string BetEffective = 7;//有效投注
+  string WinLost = 8;//输赢金额
+  string Winner = 9;//开奖结果,游戏种类不同
+  string Answer = 10;//开奖的详细内容，游戏种类不同，可能为空
+  string AnswerTime = 11;//开奖时间
+  string SubType = 12;
+  string Type = 13;//游戏类型
+}
+
+//获取玩家投注明细列表
+message GetBetRecordListReq {
+  string Token = 1;     //玩家登陆用的token
+  int32  DeskNo = 2;  //桌号
+  string StartTime= 3; //开始时间
+  string EndTime = 4;//结束时间
+  int32  Page = 5;       //第几页（从1开始）
+  int32  PageSize = 6;   //每页多少条
+}
+
+//获取玩家投注明细列表
+message GetBetRecordListRet {
+  repeated BetRecord BetRecordList = 1;
+  string Total = 2;                      // 总条数
+  string TotalPage = 3;                  // 总页数
+  string Page = 4;                       // 当前页
+  string PageSize = 5;                   // 每页条数
+}
+
+// 获取玩家输赢统计，请求参数
+message UserWinLostAccountReq {
+  string Token = 1;     //玩家登陆用的token
+  string StartTime = 2; //开始时间
+  string EndTime = 3;//结束时间
+}
+
+// 获取玩家输赢统计，返回参数
+message UserWinLostAccountRet {
+    string Username = 1 ;
+    string Bet = 2;           // 投注总金额
+    string BetEffective = 3;  // 有效投注总金额
+    string Water = 4;         // 洗码总金额
+    string WinLost = 5;       // 输赢总金额
+    string Tip = 6;           // 打赏总金额
+    string StartTime = 7;           // 打赏总金额
+    string EndTime = 8;           // 打赏总金额
+}
+
+// 获取最近群聊的消息列表
+message ChatlistReq {
+  string Token = 1;  //玩家登陆用的token
+  string GameId = 2; //游戏id
+  int32 DeskNo = 3;  //游戏房间号
+}
+
+// 获取最近群聊的消息列表
+message TalkChat {
+  string GameId = 1 [json_name = "gameId"];      // 游戏ID
+  int32 Deskno = 2 [json_name = "deskno"];       // 桌号
+  int32 MsgType = 4 [json_name = "msgType"];     // 消息类型 0：聊天内容 1：服务器公告  2：派彩公告
+  string Message = 5 [json_name = "message"];    // 聊天的内容
+  string PlayerId = 6 [json_name = "playerId"];  // 发布聊的人
+  string CreateAt = 7 [json_name = "createAt"];  // 创建时间
+  int32 Unused1 = 8 [json_name = "unused1"];     // 是否是发布人, 0:否，1:是
+  int32 Unused2 = 9 [json_name = "unused2"];     // 暂时无用
+}
+
+
+
+// 获取最近群聊的消息列表
+message ChatlistRet {
+  repeated TalkChat List  = 1;
+}
+
+

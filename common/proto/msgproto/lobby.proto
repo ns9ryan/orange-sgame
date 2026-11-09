@@ -1,0 +1,165 @@
+syntax = "proto3";
+package msg;
+option go_package = ".;msg";
+import "google/protobuf/any.proto";
+
+//登陆请求路由服务器
+message HttpLoginReq {
+  string UserName = 1;
+  string PassWord = 2;
+}
+
+//返回路由服务器地址
+message HttpLoginRet {
+  string token = 1;
+  string WsAddr = 2;
+}
+
+//登陆服的第一条消息,msgid=10000
+message LoginReq {
+  string Token = 1;     //玩家登陆用的token
+  string UserId = 2;    //玩家帐号
+  int32  deviceType=3;  //设备类型( 0:web, 1, ios, 2 anriod )
+}
+
+//登陆返回的结果消息
+message LoginRes {
+
+  int32    Success = 1;   //登陆是否成功 0:成功  1:不成功
+  int32    ErrCode = 2;   //错误原因码( 2: token验证错误 3:帐号被锁 4:重复登陆 )
+  string   Msg     = 3;   //错识提示，可以不用
+
+}
+
+//玩家进入大厅
+message  EnterToLobby {
+  string UserId = 1;  //玩家ID
+  int32  Reserve= 2;  //暂时不用，用于将来
+}
+
+
+
+message  JoinToGame {   //请求进入游戏房间
+  string UserId = 1;    //帐号id
+  string GameId = 2;    //游戏ID
+  string DeskNo = 3;    //桌号
+  string HallId = 4;    //大厅用ID,2025.3.14 新增加
+
+  //string FilterId = 5; //进入多投游戏时需要用到这个，填从哪个游戏进入多投的
+}
+
+message JoinToGameResult {  //进入游戏房间的结果情况
+  string GameId = 1;
+  string DeskNo = 2;
+  int32  Success = 3;  //进入是否成功 0 不成功， 1表示成功
+  int32  code    = 4;  //错误码( 不成功的错误码)
+  string HallId  = 5;  //回复大厅ID
+
+}
+
+message LeaveFromGame {   //请求离开游戏房间
+  string UserId = 1;    //帐号id
+  string GameId = 2;    //游戏ID
+  string DeskNo = 3;    //桌号
+}
+
+message LeaveFromGameResult {  //请求离开游戏房间的结果情况
+
+  string GameId  = 1;
+  string DeskNo  = 2;
+  int32  Success = 3;  //是否成功 0 不成功， 1表示成功
+  int32  code    = 4;  //错误码( 不成功的错误码)
+
+}
+
+//进入游戏，
+message EnterToGame {
+
+  string UserId = 1;    //帐号id
+  string GameId = 2;    //游戏ID
+  string DeskNo = 3;    //桌号
+
+}
+
+//进入游戏不成功
+message EnterToGameFailed {
+
+  string GameId  = 1;
+  string DeskNo  = 2;
+
+  int32  code    = 3;  //错误码(  1 ：此玩家数据没有初始化 ，表示需要 先JoinToGame ）
+
+}
+
+
+//更新大厅的各个游戏的状态
+message NotifyLobbyGameStatus {  //大厅通知更新游戏状态
+
+  string GameId  = 1;     //游戏ID
+
+  int32  DeskNo  = 2;     //桌号
+  int32  Set    = 3;      //场次
+  int32  Round  = 4;      //局号
+  int32  GameStatus = 5;  //游戏当前状态内容参考游戏状态值
+  int32  BetTime = 6;     //倒计时时间
+
+  int32  IsAnswered = 7;
+  int32  PlayerNum = 8;   //此游戏的玩家人数
+  int32  UnUsed = 9 ;     //此游戏的没有使用的
+}
+
+//开送给大厅的开奖结构体
+message NotifyLobbyGameAnswer {
+
+  string  GameId  = 1;     //游戏ID
+  int32   DeskNo  = 2;     //桌号
+  int32   Set     = 3;      //场次
+  int32   Round   = 4;      //局号
+  int32   GameType = 5;     //游戏种类(  1:百家乐  2，龙户  3:轮盘 4：晒保 )
+  int32   Winner  = 6;    //开奖的结果(DataType 不同值，表示不同开奖结果)
+                          //GameType =1 ,百家乐( 0:闲家， 1 庄家， 2 和）
+                          //GameType =2 ,龙虎( 0 龙，1 虎 ，2 和)
+                          //GameType =3  轮盘( 开奖号)
+                          //GameType =4  晒保( 开奖索引)
+  int32   Val1 = 7;         //百家乐，闲对子=1，  晒保时:晒子数1
+  int32   Val2 = 8;         //百家乐，庄对子=2，  晒保时:晒子数2
+  int32   Val3 = 9;         //晒保时:晒子数3
+}
+
+
+//服务器发送客户端的历史开答消息
+message NotifyLobbyHistoryAnswers {
+
+  string  GameId  = 1;       //每个游戏游戏唯一的ID
+  int32   DeskNo  = 2;       //桌号
+  int32   Set     = 3;       //场次
+  int32   Round   = 4;       //局数
+
+  int32   GameStatus = 5;    //游戏状态 0 休场 1 洗牌  2 下注中， 3 停止下注
+  int32   BetTime    = 6;    //若游戏在下注状态时，此值表示还有多少投注秒数
+
+  int32   DataType   = 7;   //后面数据的结构类型
+
+  google.protobuf.Any Answers = 8; //适用于通用数据类型
+}
+
+//服务器的公告通知消息
+message NotifyLobbyNoticMessage {
+
+    int32   MsgType = 1 ;  //消息类型 0：普通消息  1：紧急消息
+    string  Message = 2;   //消息内容
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

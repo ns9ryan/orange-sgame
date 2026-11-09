@@ -1,0 +1,18 @@
+{
+  "Service": {
+    "FscService": {
+	 "WSCfg": {
+        "ListenAddr": "0.0.0.0:9564",
+        "MaxConnNum": 10000,
+        "PendingWriteNum": 10000,
+        "LittleEndian": false,
+        "MaxMsgLen": 1024000,
+        "MinGoroutineNum": 100,
+        "MaxGoroutineNum": 500,
+        "MaxTaskChannelNum": 100000
+      }
+    }
+  },
+  "NodeService": [
+  ]
+}

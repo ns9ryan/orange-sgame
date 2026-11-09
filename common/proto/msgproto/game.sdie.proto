@@ -1,0 +1,20 @@
+syntax = "proto3";
+package msg;
+option go_package = ".;msg";
+
+message AnswerSdie {
+
+  uint32   winner = 1 ;  //开奖号码(1-4)红色的个数
+
+  repeated uint32 winnerIds = 2; //开奖号码将会高亮哪些下注区
+
+}
+
+//番摊的历史开答结果
+message  WinnersSdie {
+
+  uint32   totalnum  = 1;  //总的开奖次数
+  uint32   lastnum   = 2;  //传输给前端的最后多少局的列表
+
+  repeated  uint32  WinnerItems = 3; //历史开奖号码列表
+}

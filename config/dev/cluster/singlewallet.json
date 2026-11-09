@@ -1,0 +1,10 @@
+{
+  "Service": {
+    "SingleWalletService": {
+      "HttpListen":":9004",
+      "ForbidGustLogin":false,
+      "GoroutineNum": 2,
+      "ChannelNum": 10000
+    }
+  }
+}

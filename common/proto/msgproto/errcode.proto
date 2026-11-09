@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package msg;
+option go_package = ".;msg";
+
+enum ErrCode {
+  Ok = 0;//成功
+  Fail = 1;//失败
+
+  TokenError     = 101;  //Token验证错误
+  AccountInValid = 102;  //帐号无效
+  AccountLocked  = 103;  //帐号被锁
+  RepeatLogin    = 104;  //重复登录
+  SystemMaintain = 105 ; //系统维护
+  IpBlocked      = 106 ; //IP黑名单
+
+
+  BetErr_CardBlocked      =  120 ; //帐号被锁
+  BetErr_CardPauseBet     =  121 ;//帐号暂停投注
+  BetErr_NoBettingStatus  =  122 ;//非下注时间
+  BetErr_BalanceNotEnough =  123 ;//超出余额
+  BetErr_LessLowBetting   =  124 ; //少于低注
+  BetErr_OverHighBetting  =  125 ; //超出高注
+  BetErr_OverTableLimit   =  126 ; //超出台红
+  BetErr_ServerClusterErr =  127 ; //服务器内部出错
+  BetErr_ServerBetIdErr   =  128 ; //投注的ID错误
+  BetErr_ServerEmptyBet   = 129  ; //已无可撤消的投注
+  BetErr_ServerPlayerIdErr = 130 ; //帐号无法获取
+  BetErr_ServerTipErr      = 131 ;  //打赏的金额不符合要求
+
+
+}

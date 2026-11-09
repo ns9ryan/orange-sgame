@@ -1,0 +1,8 @@
+{
+  "Service": {
+    "WalletService": {
+      "GoroutineNum": 2,
+      "ChannelNum": 10000
+    }
+  }
+}

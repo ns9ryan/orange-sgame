@@ -1,0 +1,22 @@
+Redis:
+  Host: "127.0.0.1"
+  Port: 6379
+  Auth: ""
+  MaxIdle: 10
+  MaxActive: 1000
+  IdleTimeout: 60
+  IndexDb: 1      # 注意 redis 默认连接的是 1 号数据库，不是 0号数据库
+  ConnFailRetryTimes: 3    #从连接池获取连接失败，最大重试次数
+  ReConnectInterval: 1     # 从连接池获取连接失败，每次重试之间间隔的秒数
+
+Mongo:
+  Url: "mongodb://127.0.0.1:27017"
+  DBName: "db_video_game"
+  GoroutineNum: 2
+  ChannelNum: 100000
+  SlowQueryTime: 500
+  CacheCompress: true
+  MaxCacheCap: 100000
+  ExpirationTimeSecond: 604800
+  CheckIntervalSecond: 60
+  IntervalCheckNum: 100

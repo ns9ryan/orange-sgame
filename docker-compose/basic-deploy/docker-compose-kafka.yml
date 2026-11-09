@@ -1,0 +1,39 @@
+#启动命令
+#docker compose -f ./docker-compose-kafka.yml up -d
+
+services:
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    container_name: zookeeper
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    ports:
+      - "2181:2181"
+
+  kafka1:
+    image: bitnami/kafka:latest
+    container_name: kafka1
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.0.116:9092
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+
+  kafka2:
+    image: bitnami/kafka:latest
+    container_name: kafka2
+    environment:
+      - KAFKA_BROKER_ID=2
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_LISTENERS=PLAINTEXT://:9095
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.0.116:9095
+    ports:
+      - "9095:9095"
+    depends_on:
+      - zookeeper

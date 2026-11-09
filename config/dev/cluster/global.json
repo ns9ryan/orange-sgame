@@ -1,0 +1,35 @@
+{
+  "Global": {
+    "Debug": true,
+    "Pem": {
+      "KeyFile":"",
+      "CertFile":""
+    },
+    "NodeService":
+    {
+      "GateService": {
+        "WSCfg": [
+          {
+            "NodeId": "gate1",
+            "ListenAddr": "0.0.0.0:9444",
+            "MaxConnNum": 10000,
+            "PendingWriteNum": 10000,
+            "MaxMsgLen": 1024000,
+            "Host": "127.0.0.1",
+            "Port": 9444
+          },
+          {
+            "NodeId": "gate2",
+            "ListenAddr": "0.0.0.0:9666",
+            "MaxConnNum": 10000,
+            "PendingWriteNum": 10000,
+            "MaxMsgLen": 1024000,
+            "Host": "127.0.0.1",
+            "Port": 9666
+          }
+        ]
+      }
+    }
+  }
+}
+

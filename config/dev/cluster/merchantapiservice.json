@@ -1,0 +1,15 @@
+{
+  "Service": {
+    "MerchantApiService": {
+      "HttpListen":":9003",
+      "ForbidGustLogin":false,
+      "MinGoroutineNum": 10,
+      "MaxGoroutineNum": 100,
+      "MaxTaskChannelNum": 100,
+      "KeyFile":"",
+      "CertFile":""
+    }
+  },
+  "NodeService": [
+  ]
+}

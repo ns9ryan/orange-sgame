@@ -1,0 +1,27 @@
+syntax = "proto3";
+package msg;
+option go_package = ".;msg";
+
+
+
+//百家乐游戏的supersix开关，这是百家乐才有的
+message CTOS_GameSuperSixSet {
+
+  string   GameId = 1 ; //游戏ID
+  int32    DeskNo = 2 ; //桌号
+  int32    Supersix = 3; //supersix开关 = 1 ,启用   supersix=0  关闭supersix
+
+  int32    OptKey = 4;  //操作的key
+}
+
+//百家乐游戏supersix操作的开关状态
+message STOC_GameSuperSixStatus {
+
+  string   GameId    = 1 ;  //游戏ID
+  int32    DeskNo    = 2 ;  //桌号
+
+  bool     EnableOpt = 3; //这个开关是否可操作( 0:禁操作， 1 可操作) 若有投注了这个是禁操作
+  int32    SuperSix = 4;  //supersix开关 =true,启用supersix ,false 禁用supersix
+
+  bool     SuperVisable = 5; //这个按钮是否显示出来( 0：不需要显示， 1:显示出来)
+}

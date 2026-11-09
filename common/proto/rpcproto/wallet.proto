@@ -1,0 +1,64 @@
+
+syntax = "proto3";
+package rpc;
+option go_package = ".;rpc";
+
+enum  WalletType {
+
+  BetData     =0 ;  //投注的数据
+  WinLostData =1;   //胜负的数据
+  TipData     =2;   //打赏的数据
+  AccountData =3;   //玩家帐目的数据
+
+}
+
+//加减点主表求
+message  WalletOptReq {
+
+  int32   Opt    = 1;   //0 加点 1 减点
+  float   Point  = 2;   //操作的额度
+
+  string  UserId  =3;   //帐号
+  string  GameId = 4;   //游戏id
+  int32   DeskNo = 5;   //桌号
+
+  int32   DataType = 6;  //WalletType 的数据类型
+  string  TranId = 7;    //传输的ID
+  string  RoundId = 8;    //对局ID
+
+}
+
+//加减点的结果
+message WalletOptRet {
+
+  int32    Opt    =  1;   //0 加点 1 减点
+  float    Point  =  2;
+  string   UserId  = 3;  //帐号
+
+  double   Balance = 4;  //玩家当前的余额
+  int32    success = 5;  //操作是否成功 0 不成功  1成功
+  int32    errCode = 6;  //错误码
+
+  int32    DataType = 7;  //WalletType 的数据类型
+}
+
+//更新玩家帐目
+message WalletAccount {
+
+    string  UserId  = 1;  //帐号
+
+    uint32  Bet = 2 ;           //更新投注额
+    uint32  BetEffective = 3;   //更新有效投注
+    uint32  Water = 4;          //更新洗码
+    int32   WinLost = 5;        //更新胜负
+}
+
+//更新打赏的数据
+message WalletTipAmout {
+   string  UserId = 1;   //帐号
+
+   uint32  TipAmout = 2; //打赏的数据
+   uint32  Digits = 3;   //打赏小数位
+
+}
+

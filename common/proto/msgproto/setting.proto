@@ -1,0 +1,32 @@
+syntax = "proto3";
+package msg;
+option go_package                           = ".;msg";
+
+//投注区域结构体
+message  BetArea{
+
+   uint32  AreaId    = 1;   //投注区域Id
+// uint64  LowBet    = 2;  //低注
+// uint64  HighBet   = 3;  //高注
+
+  uint32  LowBet    = 2;  //低注  2025.4.28
+  uint32  HighBet   = 3;  //高注  2025.4.28
+
+
+  uint32  Odds      = 4;  //赔率
+   uint32  OddsDigits    = 5;  //用于配合odds，实际赔率= odds/Digits
+}
+
+//各个游戏投注桌的信息
+message  BetSetting {
+
+  int32     BetAreaNum      =1 ;       //投注区域的数量( 普通
+  int32     Digits          =2 ;       //区域投注高低注需要除这个
+  repeated  BetArea betArea =3 ;       //投注区域
+
+  int32     UnusedA         =4;        //保留用，个别游戏需要用到( 百家乐用supersix 开关)
+  int32     UnusedB         =5;        //保留用，个别游戏需要用到
+}
+
+
+

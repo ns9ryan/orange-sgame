@@ -1,0 +1,63 @@
+syntax = "proto3";
+package rpc;
+option go_package = ".;rpc";
+
+
+//商户的信息数据
+message   MerchantItem {
+
+  string  MerchantId = 1 ;
+  string  ParentId   = 2 ;
+  int32   Status     = 3 ;
+  int32   BetPause   = 4 ;
+  string  TemplateId = 5; //限红Id
+
+}
+
+//限红模板ID
+message PlanIdItem {
+
+  int32   Opt       = 1;
+
+  string  PlanId    = 2;
+  uint32  MinValue  = 3;
+  uint32  MaxValue  = 4;
+  uint32  Digits    = 5;
+}
+
+
+//玩家的信息
+message   PlayerItem {
+
+  string  PlayerId = 1;
+  int32   Status   = 2;
+
+}
+
+//服务结点的信息
+message  ServiceItem {
+
+   string  GameId      = 1 ; //游戏服ID,若不是游戏服，这个ID也是唯一
+   string  NodeId      = 2;  //游戏服处在的NodeId
+   string  ServiceName = 3;  //游戏服名称
+   int32   RegType     = 4;  //服务类型
+   int32   DeskNo      = 5;  //桌号
+   string  IpAddr      = 6;  //服务器IP
+   uint32  WParam      = 7;  //附加参数1 ( 多钱包时为:0， 单钱包时为 ：1)
+   uint32  LParam      = 8;  //附加参数2
+}
+
+
+//游戏设置更新
+message GameConfigItem {
+
+   string  GameId         = 1;   //修改的游戏ID
+   int32   DeskNo         = 2 ;  //修改对应的游戏桌号
+
+   int32   TotalBetTime   = 3;   //总投注时间
+   string  VideoUrl       = 4;   //视讯地址
+   string  GameTitle      = 5;   //游戏说明
+}
+
+
+

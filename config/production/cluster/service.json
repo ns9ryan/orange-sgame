@@ -1,0 +1,20 @@
+{
+  "Service":{
+	  "HttpService":{
+		"ListenAddr":"0.0.0.0:9000",
+		"ReadTimeout":10000,
+		"WriteTimeout":10000,
+		"ProcessTimeout":10000,
+		"ManualStart": false,
+		"CAFile":[
+		{
+			"Certfile":"",
+			"Keyfile":""
+		}
+		]
+		
+	  }
+  },
+  "NodeService":[ ]
+ 
+}

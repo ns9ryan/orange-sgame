@@ -1,0 +1,36 @@
+syntax = "proto3";
+package msg;
+option go_package = ".;msg";
+import "msgproto/game.proto";//go中使用这个
+
+
+//各游戏桌的配置列(进去多投页面返回的数据)
+message STOC_GameSettingList {
+  repeated STOC_GameSetting List  = 1;
+}
+
+//各游戏桌的最低，最高注的设置(进去多投页面返回的数据)
+message STOC_GameBetLimitList {
+  repeated STOC_GameBetLimit List  = 1;
+}
+
+//各游戏桌的最低，最高注的设置(进去多投页面返回的数据)
+message STOC_GameStatusList {
+  repeated STOC_GameStatus List  = 1;
+}
+
+//各游戏桌历史开答消息(进去多投页面返回的数据)
+message STOC_GameHistoryAnswersList {
+  repeated STOC_GameHistoryAnswers List  = 1;
+}
+
+//GameSettingOptReq 游戏设置信息
+message GameSettingOptReq{
+  string GameId = 1;//游戏唯一ID
+  int32 DeskNo = 2;//桌号
+  int32  Op = 3;    //1:获取游戏列表 2:其它操作功能
+  int32  Value = 4;
+  string ExtraData = 5; //扩展字段，比如获取游戏配置列表的时候，要把用户当前所在的游戏桌的信息排除掉，就需要传gameId
+}
+
+

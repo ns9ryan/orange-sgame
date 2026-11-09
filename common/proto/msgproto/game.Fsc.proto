@@ -1,0 +1,27 @@
+syntax = "proto3";
+package msg;
+option go_package = ".;msg";
+
+//=================================================================================================
+//鱼虾蟹的开答结果
+message AnswerFsc {
+
+  uint32   winner  = 1 ;  //开答的索引
+
+  uint32   FscA   = 2;  //第一个球的内容
+  uint32   FscB   = 3;  //第二个球的内容
+  uint32   FscC   = 4;  //第三个球的内容
+
+  repeated  uint32   WinnerIds  =  5; //需要高亮显示的区域id
+
+}
+
+//鱼虾蟹的历史开奖结果
+message  WinnersFsc {
+
+  int32   totalnum  = 1;  //总的开奖列表数
+  int32   lastnum   = 2;  //传输给你的最后多少局的列表
+
+  repeated  uint32  WinnerItems = 3; //开奖索引号
+}
+

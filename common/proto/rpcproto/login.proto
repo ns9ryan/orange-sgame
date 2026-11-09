@@ -1,0 +1,90 @@
+syntax = "proto3";
+package rpc;
+option go_package = ".;rpc";
+
+//LoginToLobbyReq
+message LoginToLobbyReq {
+    string GateNodeId    = 1;
+    string ClientId     = 2;
+    string UserId       = 3;
+    string SessionId     = 4;
+    string Ip           = 5;
+    string Os           = 6;
+}
+
+// LoginToLobbyRet
+message LoginToLobbyRet {
+    string UserId   = 1;
+    string UserName = 2;
+    int32  Ret      =3;  // 0表示成功 1 登陆会话不存在，重新走登陆流程  2登陆Token错误
+}
+
+
+// 用传RPC之间传递的消息体， 加入游戏房间, 主要是用于大厅lobby和游戏服务之间
+message  JoinToGameRPC  {
+
+   string  UserId      = 1 ;  //帐号userId
+   string  ClientId    = 2;   //clientId
+   string  GateNodeId  = 3;   //来源的gate
+   string  GameId      = 4;  //游戏ID
+   string  DeskNo      = 5;  //桌号
+
+   string  HallId      = 6;  //大厅用ID
+
+}
+
+// 用传RPC之间传递的消息体， 离开游戏房间
+message  LeaveFromGameRPC  {
+   string  UserId      =1 ; //帐号userId
+   string  ClientId    =2; //clientId
+   string  GateNodeId  =3; //来源的gate
+
+   string  GameId     = 4; //游戏ID
+   string  DeskNo     = 5; //桌号
+
+  string  HallId      = 6;  //大厅用ID
+}
+
+
+//得到用户的信息
+ message  ClientInfoRPC  {
+    string  UserId     = 1;   //帐号userId
+    string  ClientId   = 2;    //clientId
+    string  GateNodeId = 3;   //来源的gate
+ }
+
+
+ //得到代理的信息
+ message   MerchantInfoRPC {
+
+    string   MerchantId   = 1;  //商户ID
+    string   MerchantName = 2;  //商户名字
+    string   WalletType   = 3;  //钱包类型
+ }
+
+
+ //在线玩家人数信息
+ message  GameOnlinePlayerNum {
+
+    string  GameId = 1;
+    uint32  DeskNo = 2;
+    uint32  OnlineNum = 3;  //玩家人数信息
+
+    int64   unixtime = 4;  //unix时间
+    string  DealerId = 5;  //荷官的信息
+
+ }
+
+
+ //荷管信息更新
+message  DealerUpdateInfo {
+
+   string  GameId     = 1;
+   uint32  DeskNo     = 2;
+   string  DealerId   = 3;
+   string  DealerName = 4;
+   string  Avator     = 5;
+
+   int32   IsWork     = 6 ;//暂时无用
+}
+

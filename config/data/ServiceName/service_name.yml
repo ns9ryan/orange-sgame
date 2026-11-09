@@ -1,0 +1,17 @@
+game_services: '[
+    {"ServiceName":"BacxAService","GameId":"BACX001"},
+    {"ServiceName":"BacxBService","GameId":"BACX002"},
+    {"ServiceName":"BacxCService","GameId":"BACX003"},
+    {"ServiceName":"LongHuService","GameId":"DTX001"},
+    {"ServiceName":"RotService","GameId":"ROT"},
+    {"ServiceName":"SicboService","GameId":"SICBO"},
+    {"ServiceName":"FtanService","GameId":"FTAN"},
+    {"ServiceName":"SdieService","GameId":"SDIE"},
+    {"ServiceName":"FscService","GameId":"FSC"}
+]'
+
+common_services: '[
+    {"ServiceName":"LobbyService"},
+    {"ServiceName":"BetService"}
+]'
+

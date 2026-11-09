@@ -1,0 +1,61 @@
+{
+    "NodeList":[
+      {
+        "NodeId": "game",
+        "ListenAddr": "127.0.0.1:8801",
+        "MaxRpcParamLen": 409600,
+        "CompressBytesLen": 20480,
+        "Private": false,
+        "remark":"//以_打头的，表示只在本机进程，不对整个子网开发",
+        "ServiceList": [
+          "HttpGateService",
+          "BetService",
+          "WalletService",
+          "RotService",
+          "LongHuService",
+          "BacxAService:BacxService",
+          "BacxBService:BacxService",
+          "BacxCService:BacxService",
+          "SicboService",
+          "FtanService",
+          "SdieService",
+          "FscService",
+          "CoreService",
+          "LobbyService"
+        ]
+      },
+      {
+        "NodeId": "gate1",
+        "ListenAddr":"127.0.0.1:8802",
+        "MaxRpcParamLen": 409600,
+        "CompressBytesLen": 20480,
+        "Private": false,
+        "remark":"//以_打头的，表示只在本机进程，不对整个子网开发",
+        "ServiceList": [
+          "GateService"
+        ]
+      },
+      {
+        "NodeId": "gate2",
+        "ListenAddr":"127.0.0.1:8803",
+        "MaxRpcParamLen": 409600,
+        "CompressBytesLen": 20480,
+        "Private": false,
+        "remark":"//以_打头的，表示只在本机进程，不对整个子网开发",
+        "ServiceList": [
+          "GateService"
+        ]
+      },
+      {
+        "NodeId": "lobby",
+        "ListenAddr": "127.0.0.1:8804",
+        "MaxRpcParamLen": 409600,
+        "CompressBytesLen": 20480,
+        "Private": false,
+        "remark":"//以_打头的，表示只在本机进程，不对整个子网开发",
+        "ServiceList": [
+          "LobbyService"
+        ]
+      }
+    ]
+}
